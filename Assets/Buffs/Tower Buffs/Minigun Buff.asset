@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126acdc2bef6a074887efae498643659, type: 3}
+  m_Name: Minigun Buff
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: d5c0d74ebcb9fe146a052a2d05cb1bd5, type: 3}
+  m_PrettyName: Minigun
+  m_Description: 'Cost: $10
+
+    Causes the tower to gain attack speed each time it fires, up to a maximum of 5
+    shots per second. The bonus decays over time at a rate of 0.5 shots per second
+    per second.'
+  m_Cost: 10
+  m_FireRateRampIncrement: 1
+  m_MaxFireRateBonus: 5
+  m_FireRateDecayPerSecond: 0.5
