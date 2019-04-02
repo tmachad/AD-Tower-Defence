@@ -68,6 +68,11 @@ public class TowerBuffManager : MonoBehaviour {
         return m_UnlockedBuffs.ToArray();
     }
 
+    public Buff[] LockedBuffs()
+    {
+        return m_LockedBuffs.ToArray();
+    }
+
     protected virtual void OnBuffUnlocked(BuffEventArgs e)
     {
         if (BuffUnlocked != null)

@@ -13,8 +13,7 @@ public class TowerManager : MonoBehaviour {
     public GameObject m_TowerButtonPrefab;
     public RectTransform m_TowerMenu;
 
-    public GameObject m_BuffPanelPrefab;
-    public RectTransform m_BuffMenu;
+    public BuffPanelList m_BuffMenu;
 
     public LayerMask m_TowerMask;
     public TowerInfoPanel m_TowerInfoPanel;
@@ -51,7 +50,7 @@ public class TowerManager : MonoBehaviour {
         Buff[] buffs = TowerBuffManager.Instance.UnlockedBuffs();
         foreach(Buff buff in buffs)
         {
-            AddBuffPanel(buff);
+            m_BuffMenu.AddBuff(buff);
         }
 
         TowerBuffManager.Instance.BuffUnlocked += OnBuffUnlocked;
@@ -131,15 +130,12 @@ public class TowerManager : MonoBehaviour {
     public void ResetToInitialState()
     {
         // Clear out buff menu
-        foreach(Transform child in m_BuffMenu)
-        {
-            Destroy(child.gameObject);
-        }
+        m_BuffMenu.Clear();
 
         Buff[] buffs = TowerBuffManager.Instance.UnlockedBuffs();
         foreach (Buff buff in buffs)
         {
-            AddBuffPanel(buff);
+            m_BuffMenu.AddBuff(buff);
         }
 
         // Clear buffs from tower templates
@@ -156,14 +152,8 @@ public class TowerManager : MonoBehaviour {
         }
     }
 
-    private void AddBuffPanel(Buff buff)
-    {
-        GameObject buffPanel = Instantiate(m_BuffPanelPrefab, m_BuffMenu);
-        buffPanel.GetComponent<BuffPanel>().Init(buff, true);
-    }
-
     private void OnBuffUnlocked(object sender, BuffEventArgs e)
     {
-        AddBuffPanel(e.buff);
+        m_BuffMenu.AddBuff(e.buff);
     }
 }

@@ -8,12 +8,11 @@ using UnityEngine.UI;
 public class TowerInfoPanel : MonoBehaviour {
 
     public Image m_TowerImage;
-    public RectTransform m_BuffList;
     public Button m_UpgradeButton;
     public Button m_SellButton;
     public Dropdown m_TargetDropdown;
 
-    public GameObject m_BuffPanelPrefab;
+    public BuffPanelList m_BuffList;
 
     private Tower m_Tower;
 
@@ -29,10 +28,7 @@ public class TowerInfoPanel : MonoBehaviour {
 
         gameObject.SetActive(true);
 
-        foreach(Transform child in m_BuffList)
-        {
-            Destroy(child.gameObject);
-        }
+        m_BuffList.Clear();
 
         m_TowerImage.sprite = tower.GetComponent<SpriteRenderer>().sprite;
 
@@ -40,8 +36,7 @@ public class TowerInfoPanel : MonoBehaviour {
         {
             if (buff != null)
             {
-                GameObject buffPanel = Instantiate(m_BuffPanelPrefab, m_BuffList);
-                buffPanel.GetComponent<BuffPanel>().Init(buff, false);
+                m_BuffList.AddBuff(buff);
             }
         }
 
