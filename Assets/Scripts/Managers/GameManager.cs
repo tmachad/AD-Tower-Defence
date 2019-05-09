@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private Text m_LivesText;
 
+    public int m_UpgradeAwardInterval = 5;
+
     public GameObject m_HUD;
     public GameObject m_MainMenu;
     public GameObject m_GameOverPanel;
@@ -57,6 +59,22 @@ public class GameManager : MonoBehaviour {
         m_HUD.SetActive(false);
         m_MainMenu.SetActive(true);
         m_GameOverPanel.SetActive(false);
+        m_UpgradePanel.SetActive(false);
+    }
+
+    private void Start()
+    {
+        WaveManager.Instance.WaveChanged += OnWaveChanged;
+    }
+
+    private void OnWaveChanged(object sender, WaveEventArgs e)
+    {
+        if (e.wave % m_UpgradeAwardInterval == 0)
+        {
+            m_UpgradePanel.SetActive(true);
+            m_UpgradePanel.GetComponent<UpgradePanel>().Init();
+            Time.timeScale = 0.0f;
+        }
     }
 
     public void StartLevel(Level level)

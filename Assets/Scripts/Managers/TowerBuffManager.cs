@@ -7,9 +7,9 @@ public class TowerBuffManager : MonoBehaviour {
 
     public static TowerBuffManager Instance;
 
-    public Buff[] m_Buffs;
-
     public event EventHandler<BuffEventArgs> BuffUnlocked;
+
+    public Buff[] m_Buffs;
 
     [SerializeField]
     private bool m_UnlockAllBuffs;

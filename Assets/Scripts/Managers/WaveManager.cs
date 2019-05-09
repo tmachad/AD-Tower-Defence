@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class WaveManager : ScalingFactor {
 
+    public event EventHandler<WaveEventArgs> WaveChanged;
+
     public int m_WaveNumber = 0;
     public Text m_WaveText;
 
@@ -15,8 +17,6 @@ public class WaveManager : ScalingFactor {
     public Text m_WaveTimerText;
 
     public GameObject m_NextWaveButton;
-
-    public int m_UpgradeAwardInterval = 10;
 
     [HideInInspector]
     public SpawnerTile m_Spawner;
@@ -75,10 +75,11 @@ public class WaveManager : ScalingFactor {
         m_WaveNumber++;
         m_WaveText.text = string.Format("Wave: {0}", m_WaveNumber);
 
-        if (m_WaveNumber % m_UpgradeAwardInterval == 0)
+        WaveEventArgs eventArgs = new WaveEventArgs()
         {
-            TowerBuffManager.Instance.UnlockRandomBuff();
-        }
+            wave = m_WaveNumber
+        };
+        OnWaveChanged(eventArgs);
 
         Wave nextWave = m_Waves[rand.Next(m_Waves.Length)];
 
@@ -120,4 +121,17 @@ public class WaveManager : ScalingFactor {
 
         StartNextWave();
     }
+
+    protected virtual void OnWaveChanged(WaveEventArgs e)
+    {
+        if (WaveChanged != null)
+        {
+            WaveChanged.Invoke(this, e);
+        }
+    }
+}
+
+public class WaveEventArgs : EventArgs
+{
+    public int wave;
 }
