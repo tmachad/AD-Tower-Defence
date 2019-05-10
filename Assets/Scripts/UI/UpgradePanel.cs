@@ -32,7 +32,11 @@ public class UpgradePanel : MonoBehaviour {
 
         foreach(Buff buff in buffs)
         {
-            m_BuffList.AddBuff(buff, InteractionMode.Click);
+            m_BuffList.AddBuff(buff, InteractionMode.Click, () => {
+                TowerBuffManager.Instance.UnlockBuff(buff);
+                gameObject.SetActive(false);
+                Time.timeScale = 1.0f;
+            });
         }
     }
 }

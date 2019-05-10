@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ public class BuffPanel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         m_ParentCanvas = GetComponentInParent<Canvas>();
     }
 
-    public void Init(Buff buff, InteractionMode interactionMode = InteractionMode.None)
+    public void Init(Buff buff, InteractionMode interactionMode = InteractionMode.None, UnityAction onInteraction = null)
     {
         m_Buff = buff;
 
@@ -31,6 +32,12 @@ public class BuffPanel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         m_InteractionMode = interactionMode;
         GetComponent<Button>().interactable = interactionMode != InteractionMode.None;
+
+        if (onInteraction != null && (interactionMode & InteractionMode.Click) != InteractionMode.None)
+        {
+            // An interaction callback exists and clicking is enabled
+            GetComponent<Button>().onClick.AddListener(onInteraction);
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
