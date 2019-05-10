@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,7 +11,7 @@ public class BuffPanel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Text m_NameText;
     public Text m_DescriptionText;
     public Buff m_Buff;
-    public bool m_Interactive;
+    public InteractionMode m_InteractionMode;
 
     private GameObject m_DragIcon;
     private Canvas m_ParentCanvas;
@@ -20,7 +21,7 @@ public class BuffPanel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         m_ParentCanvas = GetComponentInParent<Canvas>();
     }
 
-    public void Init(Buff buff, bool interactive = true)
+    public void Init(Buff buff, InteractionMode interactionMode = InteractionMode.None)
     {
         m_Buff = buff;
 
@@ -28,13 +29,13 @@ public class BuffPanel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         m_NameText.text = m_Buff.m_PrettyName;
         m_DescriptionText.text = m_Buff.m_Description;
 
-        m_Interactive = interactive;
-        GetComponent<Button>().interactable = interactive;
+        m_InteractionMode = interactionMode;
+        GetComponent<Button>().interactable = interactionMode != InteractionMode.None;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (m_Interactive)
+        if ((m_InteractionMode & InteractionMode.Drag) != InteractionMode.None)
         {
             m_DragIcon = new GameObject("Drag Icon");
             m_DragIcon.transform.SetParent(m_ParentCanvas.transform, false);

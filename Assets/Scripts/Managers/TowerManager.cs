@@ -50,7 +50,7 @@ public class TowerManager : MonoBehaviour {
         Buff[] buffs = TowerBuffManager.Instance.UnlockedBuffs();
         foreach(Buff buff in buffs)
         {
-            m_BuffMenu.AddBuff(buff);
+            m_BuffMenu.AddBuff(buff, InteractionMode.Drag);
         }
 
         TowerBuffManager.Instance.BuffUnlocked += OnBuffUnlocked;
@@ -135,7 +135,7 @@ public class TowerManager : MonoBehaviour {
         Buff[] buffs = TowerBuffManager.Instance.UnlockedBuffs();
         foreach (Buff buff in buffs)
         {
-            m_BuffMenu.AddBuff(buff);
+            m_BuffMenu.AddBuff(buff, InteractionMode.Drag);
         }
 
         // Clear buffs from tower templates
@@ -154,6 +154,6 @@ public class TowerManager : MonoBehaviour {
 
     private void OnBuffUnlocked(object sender, BuffEventArgs e)
     {
-        m_BuffMenu.AddBuff(e.buff);
+        m_BuffMenu.AddBuff(e.buff, InteractionMode.Drag);
     }
 }

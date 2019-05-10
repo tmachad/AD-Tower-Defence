@@ -32,7 +32,7 @@ public class UpgradePanel : MonoBehaviour {
 
         foreach(Buff buff in buffs)
         {
-            m_BuffList.AddBuff(buff);
+            m_BuffList.AddBuff(buff, InteractionMode.Click);
         }
     }
 }
