@@ -9,7 +9,7 @@ public class UIMover : MonoBehaviour {
     public Vector2[] m_Positions;
     public int m_PositionIndex;
     public float m_TransitionTime;
-
+    public bool m_IgnoreTimeScale;
 
     private IEnumerator m_Coroutine;
     private RectTransform m_RectTransform;
@@ -57,9 +57,16 @@ public class UIMover : MonoBehaviour {
 
         while (Vector2.Distance(transform.localPosition, destination) > 0)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += m_IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
             m_RectTransform.anchoredPosition = Vector2.Lerp(startingPosition, destination, Mathf.SmoothStep(0, 1, elapsedTime / m_TransitionTime));
-            yield return new WaitForSeconds(Time.deltaTime);
+
+            if (m_IgnoreTimeScale)
+            {
+                yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
+            } else
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
     }
 }
